@@ -141,5 +141,47 @@ class GameTests(unittest.TestCase):
         self.assertEqual(game.remaining_food, set())
 
 
+
+class TinyGrid:
+    """A bare-bones 3x3 graph stand-in used for micro-tests of ``astar.a_star``.
+
+    Only implements the piece of the :class:`maze.Maze` interface the search
+    needs (``neighbors``), so the algorithm is validated on a tiny grid first -
+    before it is ever run on the full maze.
+    """
+
+    def __init__(self, blocked=()):
+        self._blocked = set(blocked)
+        self.size = 3
+
+    def neighbors(self, r, c, for_pacman=True):
+        out = []
+        for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < self.size and 0 <= nc < self.size \
+                    and (nr, nc) not in self._blocked:
+                out.append((nr, nc))
+        return out
+
+
+class MicroGridTests(unittest.TestCase):
+    """Beginner tip: validate A* on a small 3x3 grid before full-maze runs."""
+
+    def test_optimal_on_clear_3x3(self):
+        path = astar.a_star(TinyGrid(), (0, 0), (2, 2))
+        # Manhattan lower bound (4 moves) is reached => A* is optimal here.
+        self.assertEqual(len(path), 5)
+        self.assertEqual(path[0], (0, 0))
+        self.assertEqual(path[-1], (2, 2))
+
+    def test_avoids_blocked_cell_on_3x3(self):
+        grid = TinyGrid(blocked=[(0, 1)])
+        path = astar.a_star(grid, (0, 0), (2, 2))
+        self.assertEqual(path[-1], (2, 2))
+        self.assertNotIn((0, 1), path)
+        for a, b in zip(path, path[1:]):
+            self.assertIn(b, grid.neighbors(*a))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
