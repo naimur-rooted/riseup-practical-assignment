@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .ipynb_checkpoints/
+
+# Phase 5 — polished APA 7 report is kept local only (do not push)
+phase -5/TECHNICAL_REPORT.md
