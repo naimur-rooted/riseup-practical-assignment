@@ -4,8 +4,6 @@
 
 # Abstract
 
-[Placeholder: 150–250 words summary]
-
 - Scope: three practical phases — Phase 2 (tabular Q-learning, single + multi-agent), Phase 3 (multi-agent DQN), Phase 4 (Pac-Man A* autopilot).
 - Method in one sentence: from-scratch, seeded (SEED = 42), exhaustively evaluated with frozen parameters.
 - Headline numbers to include: Phase 3 — 99.50% (597/600) exhaustive success, 0 head-on collisions, 416.1 s ≤ 600 s budget; Phase 4 — 349/349 dots, WON 12/12 seeds, 21/21 tests.
