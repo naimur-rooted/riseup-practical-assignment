@@ -11,16 +11,12 @@
 
 # Introduction
 
-[Placeholder: context, references]
-
 - Context: RiseUp Asia Python AI Researcher/Intern practical assignment; the assignment's arc from learned policies (Phases 2–3) to model-based search (Phase 4).
 - Framing citations: RL foundations (Sutton & Barto, 2018), Q-learning (Watkins & Dayan, 1992), DQN (Mnih et al., 2015), A* (Hart et al., 1968), MARL survey (Busoniu et al., 2008), search (Russell & Norvig, 2021).
 - Three governing principles to state: (1) from-scratch implementation (NumPy/Matplotlib; PyTorch only in Phase 3); (2) exhaustive frozen evaluation (600 scenarios, checksummed parameters); (3) reproducibility (fixed seeds).
 - Roadmap paragraph: problem → methodology → results → conclusion.
 
 # Problem Statement
-
-[Phase 2, Phase 3, Phase 4 tasks + acceptance criteria]
 
 - **P1 — Phase 2, Part 1:** 5 × 5 grid, 8 actions (incl. diagonals), item A random per episode, fixed B = (4, 4); state (ar, ac, ir, ic, carrying); rewards −1 move / −2 invalid / +10 pickup / +100 delivery. Acceptance: exhaustive 600-scenario (25 × 24) frozen-greedy evaluation.
 - **P1 — Phase 2, Part 2:** two independent rovers (Type A U-payload destroyed in rain; Type B R-payload immune); lake flips dry/raining p = 0.5; LAPS = 4; 5 actions (incl. wait); rewards −5 / −3 / +10 / +50. Acceptance: 2,000-episode greedy eval + γ-sensitivity study (5 γ values).
@@ -29,16 +25,12 @@
 
 # Methodology
 
-[Design principles, algorithms, environments]
-
 - Design principles: from-scratch; seeded reproducibility; frozen-parameter evaluation; exhaustive scenario coverage; separation of concerns (environment / learner / rendering).
 - **Phase 2:** Q-tables `Q[5,5,5,5,2,8]` = 10,000 entries (Part 1), `Q[25,2,2,5]` = 500 per type (Part 2); unbiased ε-greedy with random tie-breaking (Part 2 decay 1.0 → 0.02 @ 0.9997); standard TD update with terminal handling; γ-study = 8,000 episodes × 5 values (0.85–0.995).
 - **Phase 3:** one shared DQN for all four agents — `Linear(19→128) → ReLU → Linear(128→128) → ReLU → Linear(128→4)`; 19-dim obs = 7 default + 12 purchased sensor dims; round-robin Central Clock; correlated ε-greedy ("platooning") ε 0.08 → 0.01 over 220k steps; Huber TD loss, Adam lr 1e-3, γ 0.95, batch 512, target hard-sync 2,500 ticks, grad-clip 10, replay 200k; episode rule mirrors evaluation (start at B, early termination on all-delivered); guards: 1.45M-step cap, 510 s walltime.
 - **Phase 4:** skeleton's 38 wall rectangles → 101 × 101 tile map @ 6 px → 19 × 19 cells (5 × 5 tiles each); doorway connectivity check (no wall clipping); dual graphs (Pac-Man: house+gate blocked; ghost: gate open); A* with heapq frontier `(f, g, node)`, closed set + best-g map (lazy deletion), Manhattan heuristic (admissible/consistent), `came_from` backtracking; ghost cells hard-blocked, ghost-adjacent cells +`GHOST_ADJACENT_PENALTY` = 50; re-plan triggers: dot eaten / next cell becomes ghost cell; greedy-nearest dot ordering (documented: not TSP-optimal); testing: 3 × 3 micro-grid first, then full maze (21 tests).
 
 # Results & Discussion
-
-[Phase 2 outcomes, Phase 3 DQN success, Phase 4 A* autopilot]
 
 - **Phase 2, Part 1:** converges in seconds; full 600-scenario greedy evaluation with Q-table verified unchanged; learning curves (reward/steps moving averages) and learned paths plotted.
 - **Phase 2, Part 2:** key finding — at short horizons (low γ) Type B *free-rides* through the dry lake and the rovers collide; longer horizons internalise the shared risk (independent-learner equilibrium failure, cf. Tan, 1993). Wait-cost asymmetry (−3 < −5) makes weather-aware waiting learnable.
@@ -48,15 +40,11 @@
 
 # Conclusion
 
-[Summary + limitations + future work]
-
 - Summary: three validated deliverables — (a) tabular Q-learning with exhaustive frozen eval + γ-study; (b) four-agent shared DQN at 99.50% success, zero collisions, inside all budgets; (c) modular A* Pac-Man autopilot, all dots, 12/12 seeds, 21 tests.
 - Limitations: independent tabular learners non-stationary by construction; platooning trades exploration diversity for safety; greedy dot ordering; pygame optional (no Python 3.14 wheel) — absorbed by decoupled renderers.
 - Future work: joint-action critics; TSP dot ordering; learned ghost prediction replacing static adjacency penalties; policy-gradient methods.
 
 # References
-
-[APA 7 formatted references]
 
 - Alphabetical order; hanging indent (approximated by bullets in Markdown).
 - Core list: Bellman (1957); Bokmann (n.d., Pacman skeleton); Busoniu et al. (2008); Dijkstra (1959); Harris et al. (2020, NumPy); Hart et al. (1968, A*); Huber (1964); Hunter (2007, Matplotlib); Mnih et al. (2013, 2015); Pac-Man A* tutorial video (n.d.); Paszke et al. (2019, PyTorch); Russell & Norvig (2021); Shinners (n.d., pygame); Sutton & Barto (2018); Tan (1993); Watkins & Dayan (1992).
@@ -64,15 +52,11 @@
 
 # Citations
 
-[In-text citation map]
-
 - APA 7 requires in-text citations at each point of use.
 - Build a two-column map: source → sections citing it (e.g., Watkins & Dayan, 1992 → Introduction; Methodology/Phase 2).
 - Check: no orphan references, no uncited claims of prior work.
 
 # Appendices
-
-[Hyperparameters, reward tables, pseudocode]
 
 - **Appendix A (Phase 2, Part 1):** reward table; Q-table shape; 600-scenario evaluation protocol.
 - **Appendix B (Phase 2, Part 2):** reward table (additive stacking); lake dynamics; ε schedule; γ-sensitivity design + qualitative findings.
