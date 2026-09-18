@@ -67,4 +67,3 @@
 - Current active version file path updated: `src/mycli/__init__.py` holds `__version__ = "1.2.3"`, matching the runtime probe `python -c "import mycli; print(mycli.__version__)"`.
 - Backup location retained for 24 hours: `/opt/mycli.bak`.
 - Temp files removed: `/tmp/mycli-update/v1.2.3/` and `/tmp/mycli-1.2.3.whl` are deleted after a successful swap.
-

@@ -3,5 +3,12 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 
+# Python virtualenvs and local SQLite runtime data (phase-9)
+.venv/
+*.db
+
+# Secrets (phase-9): the real .env must never be committed
+.env
+
 # Phase 5 — polished APA 7 report is kept local only (do not push)
 phase-5/TECHNICAL_REPORT.md
