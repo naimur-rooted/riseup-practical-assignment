@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Capture</title>
+    <style>
+      body { font-family: system-ui, sans-serif; width: 320px; margin: 12px; }
+      label { font-weight: 600; display: block; margin-top: 10px; }
+      input, textarea { width: 100%; box-sizing: border-box; margin-top: 4px; }
+      button { margin-top: 10px; width: 100%; padding: 8px; }
+      .row { display: flex; gap: 8px; }
+      #status { margin-top: 8px; min-height: 18px; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <label for="api-key">API key (saved once, locally)</label>
+    <div class="row">
+      <input id="api-key" type="password" placeholder="X-API-Key value" />
+      <button id="save-key" title="Store the key in chrome.storage.local">Save</button>
+    </div>
+    <label for="title">Title</label>
+    <input id="title" />
+    <label for="content">Selected text</label>
+    <textarea id="content" rows="4"></textarea>
+    <button id="save">Save to Phase 9</button>
+    <div id="status"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>
